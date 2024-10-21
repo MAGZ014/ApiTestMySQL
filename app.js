@@ -1,6 +1,6 @@
 import express from "express";
 import { clientRouter } from "./routes/clientes.routes.js";
-import "dotenv/config";
+//import "dotenv/config";
 
 const app = express();
 app.disable("x-powered-by");
