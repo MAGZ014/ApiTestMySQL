@@ -3,8 +3,11 @@ import { ClientController } from "../controllers/clientController.js";
 
 export const clientRouter = Router();
 
-clientRouter.get("/", ClientController.getAll);
-clientRouter.post("/", ClientController.create);
-clientRouter.get("/:id", ClientController.getById);
-clientRouter.delete("/:id", ClientController.delete);
-clientRouter.patch("/:id", ClientController.update);
+// Instanciar el controlador
+const clientController = new ClientController();
+
+clientRouter.get("/", clientController.getAll.bind(clientController));
+clientRouter.post("/", clientController.create.bind(clientController));
+clientRouter.get("/:id", clientController.getById.bind(clientController));
+clientRouter.delete("/:id", clientController.delete.bind(clientController));
+clientRouter.patch("/:id", clientController.update.bind(clientController));

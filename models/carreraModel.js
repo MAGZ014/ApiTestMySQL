@@ -1,6 +1,6 @@
 import { getConnection } from "../config/conexion.js";
 
-export class CarreraMadel {
+export class CarreraModel {
   //Obtener los todos los clientes
   static async getAll() {}
 
