@@ -2,10 +2,13 @@ import express from "express";
 import { clientRouter } from "./routes/clientes.routes.js";
 import { carreraRouter } from "./routes/carrera.routes.js";
 import { equipoRouter } from "./routes/equipo.routes.js";
+import cors from "cors"; // Asegúrate de que esté importado correctamente
+
 //import "dotenv/config";
 
 const app = express();
 app.disable("x-powered-by");
+app.use(cors());
 // Middleware para interpretar JSON
 app.use(express.json());
 
