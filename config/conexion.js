@@ -5,7 +5,7 @@ const DEFAULT_CONFIG = {
   user: "root",
   port: 3306,
   password: "root",
-  database: "test",
+  database: "lobos_kit",
 };
 
 const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG;

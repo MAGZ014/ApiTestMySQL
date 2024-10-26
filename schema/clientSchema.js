@@ -1,13 +1,12 @@
 import z from "zod";
 
 const clientSchema = z.object({
-  ClientesNombre: z.string(),
-  ClientesDireccion: z.string(),
-  ClientesTelefono: z.string(),
-  ClientesCelular: z.string(),
-  ClientesMail: z.string().email(),
-  ClientesObservaciones: z.string(),
-  clientesFrec: z.string(),
+  nombre: z.string(),
+  correo: z.string().email(),
+  cuatrimestre: z.number(),
+  password: z.string(),
+  carrera: z.number(),
+  id_rol: z.number(),
 });
 
 export function validateClient(input) {

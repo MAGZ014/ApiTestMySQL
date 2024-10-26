@@ -1,127 +1,99 @@
 import { getConnection } from "../config/conexion.js";
 
 export class ClientModel {
-  //Obtener los todos los clientes
+  //Obtener los todos los user
   static async getAll() {
     const connection = await getConnection();
-    const [clientes] = await connection.query(`SELECT * FROM clientes`);
-    return clientes;
+    const [users] = await connection.query(`SELECT * FROM user`);
+    return users;
   }
 
   static async getById({ id }) {
     const connection = await getConnection();
-    const [cliente] = await connection.query(
-      `SELECT * FROM clientes WHERE ClientesCodigo = ?;`,
-      [id]
-    );
-    if (cliente.length === 0) return null;
+    const [user] = await connection.query(`SELECT * FROM user WHERE id = ?;`, [
+      id,
+    ]);
+    if (user.length === 0) return null;
 
-    return cliente[0];
+    return user[0];
   }
 
   static async create({ input }) {
-    const {
-      ClientesNombre,
-      ClientesDireccion,
-      ClientesTelefono,
-      ClientesCelular,
-      ClientesMail,
-      ClientesObservaciones,
-      clientesFrec,
-    } = input;
+    const { nombre, correo, cuatrimestre, password, carrera, id_rol } = input;
 
     const connection = await getConnection();
 
     try {
       // Captura el resultado de la inserción en la variable result
       const [result] = await connection.query(
-        `INSERT INTO clientes (ClientesNombre, ClientesDireccion, ClientesTelefono, ClientesCelular
-          , ClientesMail, ClientesObservaciones, clientesFrec)
-            VALUES (?,?,?,?,?,?,?);`,
-        [
-          ClientesNombre,
-          ClientesDireccion,
-          ClientesTelefono,
-          ClientesCelular,
-          ClientesMail,
-          ClientesObservaciones,
-          clientesFrec,
-        ]
+        `INSERT INTO user (nombre,correo,cuatrimestre,password,carrera,id_rol)
+            VALUES (?,?,?,?,?,?);`,
+        [nombre, correo, cuatrimestre, password, carrera, id_rol]
       );
 
       // Usa result.insertId para obtener el ID del nuevo registro
-      const [clientes] = await connection.query(
-        `SELECT * FROM clientes WHERE ClientesCodigo = ?;`,
-        [result.insertId] // `result.insertId` es el ID del cliente recién insertado
+      const [user] = await connection.query(
+        `SELECT * FROM user WHERE id = ?;`,
+        [result.insertId] // `result.insertId` es el ID del user recién insertado
       );
 
-      return clientes[0]; // Devuelve el cliente recién creado
+      return user[0]; // Devuelve el user recién creado
     } catch (e) {
-      throw new Error("Error creating client: " + e);
+      throw new Error("Error creating user: " + e);
     }
   }
 
   static async delete({ id }) {
     const connection = await getConnection();
 
-    const [result] = await connection.query(
-      `DELETE FROM clientes WHERE ClientesCodigo = ?;`,
-      [id]
-    );
+    const [result] = await connection.query(`DELETE FROM user WHERE id = ?;`, [
+      id,
+    ]);
 
     // Verifica si se afectó alguna fila
     if (result.affectedRows === 0) {
-      return null; // No se encontró el cliente
+      return null; // No se encontró el user
     }
 
-    return { message: "Cliente eliminado con éxito" }; // Cliente eliminado
+    return { message: "User eliminado con éxito" }; // user eliminado
   }
 
   static async update({ id, input }) {
-    const {
-      ClientesNombre,
-      ClientesDireccion,
-      ClientesTelefono,
-      ClientesCelular,
-      ClientesMail,
-      ClientesObservaciones,
-      clientesFrec,
-    } = input;
+    const { nombre, correo, cuatrimestre, password, carrera, id_rol } = input;
 
     const connection = await getConnection();
 
     try {
-      // Realiza la actualización del cliente
+      // Realiza la actualización del user
       const [result] = await connection.query(
-        `UPDATE clientes SET ClientesNombre = ?, ClientesDireccion = ?, ClientesTelefono = ?, 
-         ClientesCelular = ?, ClientesMail = ?, ClientesObservaciones = ?, clientesFrec = ? 
-         WHERE ClientesCodigo = ?;`,
+        `UPDATE user SET nombre = ?, correo = ?, cuatrimestre = ?, 
+         password = ?, carrera = ?, id_rol = ? 
+         WHERE id = ?;`,
         [
-          ClientesNombre,
-          ClientesDireccion,
-          ClientesTelefono,
-          ClientesCelular,
-          ClientesMail,
-          ClientesObservaciones,
-          clientesFrec,
+          nombre,
+          correo,
+          cuatrimestre,
+          password,
+          carrera,
+          id_rol,
           id, // Usa el ID para la condición WHERE
         ]
       );
 
       // Verifica si alguna fila fue afectada
       if (result.affectedRows === 0) {
-        return null; // No se encontró el cliente
+        return null; // No se encontró el user
       }
 
-      // Devuelve el cliente actualizado
-      const [updatedClient] = await connection.query(
-        `SELECT * FROM clientes WHERE ClientesCodigo = ?;`,
+      // Devuelve el user actualizado
+      const [updatedUser] = await connection.query(
+        `SELECT * FROM user WHERE id = ?;`,
         [id]
       );
 
-      return updatedClient[0];
+      return updatedUser[0];
     } catch (e) {
-      throw new Error("Error updating client: " + e);
+      throw new Error("Error updated user: " + e);
     }
   }
 }

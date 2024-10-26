@@ -1,13 +1,13 @@
 import z from "zod";
 
 const equipoSchema = z.object({
-  nombre: z.string(),
-  marca: z.string(),
-  modelo: z.string(),
-  gama: z.string(),
-  descripcion: z.string(),
-  precio: z.string(),
-  puntoVenta: z.string().url(),
+  datos: z.string(),
+  url: z.string().url(),
+  img_url: z.string().url(),
+  price: z.number(),
+  reviews: z.number(),
+  rating: z.number(),
+  id_tipo_material: z.number(),
 });
 
 export function validateEquipo(input) {
