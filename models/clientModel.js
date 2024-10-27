@@ -1,34 +1,48 @@
 import { getConnection } from "../config/conexion.js";
+import bcrypt from "bcrypt";
 
 export class ClientModel {
   //Obtener los todos los user
   static async getAll() {
-    const connection = await getConnection();
-    const [users] = await connection.query(`SELECT * FROM user`);
-    return users;
+    try {
+      const connection = await getConnection();
+      const [users] = await connection.query(`SELECT * FROM user`);
+      return users;
+    } catch (error) {
+      throw new Error("Error fetching Users: " + error);
+    }
   }
 
   static async getById({ id }) {
-    const connection = await getConnection();
-    const [user] = await connection.query(`SELECT * FROM user WHERE id = ?;`, [
-      id,
-    ]);
-    if (user.length === 0) return null;
+    try {
+      const connection = await getConnection();
+      const [user] = await connection.query(
+        `SELECT * FROM user WHERE id = ?;`,
+        [id]
+      );
+      if (user.length === 0) return null;
 
-    return user[0];
+      return user[0];
+    } catch (error) {
+      throw new Error("Error fetching User by ID: " + error);
+    }
   }
 
   static async create({ input }) {
     const { nombre, correo, cuatrimestre, password, carrera, id_rol } = input;
 
     const connection = await getConnection();
+    const saltRounds = 10; // Declara saltRounds aquí
 
     try {
+      // Encriptar la contraseña
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
       // Captura el resultado de la inserción en la variable result
       const [result] = await connection.query(
         `INSERT INTO user (nombre,correo,cuatrimestre,password,carrera,id_rol)
             VALUES (?,?,?,?,?,?);`,
-        [nombre, correo, cuatrimestre, password, carrera, id_rol]
+        [nombre, correo, cuatrimestre, hashedPassword, carrera, id_rol]
       );
 
       // Usa result.insertId para obtener el ID del nuevo registro
@@ -44,18 +58,20 @@ export class ClientModel {
   }
 
   static async delete({ id }) {
-    const connection = await getConnection();
-
-    const [result] = await connection.query(`DELETE FROM user WHERE id = ?;`, [
-      id,
-    ]);
-
-    // Verifica si se afectó alguna fila
-    if (result.affectedRows === 0) {
-      return null; // No se encontró el user
+    try {
+      const connection = await getConnection();
+      const [result] = await connection.query(
+        `DELETE FROM user WHERE id = ?;`,
+        [id]
+      );
+      // Verifica si se afectó alguna fila
+      if (result.affectedRows === 0) {
+        return null; // No se encontró el user
+      }
+      return { message: "User eliminado con éxito" }; // user eliminado
+    } catch (error) {
+      throw new Error("Error deleting User: " + error);
     }
-
-    return { message: "User eliminado con éxito" }; // user eliminado
   }
 
   static async update({ id, input }) {
