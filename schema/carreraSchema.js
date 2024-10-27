@@ -1,8 +1,7 @@
 import z from "zod";
 
 const carreraSchema = z.object({
-  carrera: z.string(),
-  descripcion: z.string(),
+  nombre: z.string(),
 });
 
 export function validateCarrera(input) {
