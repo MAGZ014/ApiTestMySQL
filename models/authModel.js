@@ -9,7 +9,6 @@ export class AuthModel {
         `SELECT id, correo, password, id_rol FROM user WHERE correo = ?;`,
         [correo]
       );
-      console.log(user);
       if (user.length === 0) return null;
 
       return user[0];

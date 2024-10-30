@@ -3,14 +3,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { AuthModel } from "../models/authModel.js";
 
-const SECRET_KEY = process.env.JWT_SECRET ?? "your_secret_key";
+const SECRET_KEY =
+  process.env.JWT_SECRET || "587049cf-e776-461c-a7e2-b5d1602037d2";
 
 export class AuthController {
   async login(req, res) {
     const { correo, password } = req.body;
     try {
       const user = await AuthModel.findUserByEmail({ correo });
-      console.log(user);
       if (!user) {
         return res.status(400).json({ error: "Usuario no encontrado" });
       }

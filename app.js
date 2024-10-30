@@ -1,30 +1,18 @@
 import express from "express";
-import { clientRouter } from "./routes/clientes.routes.js";
-import { carreraRouter } from "./routes/carrera.routes.js";
-import { equipoRouter } from "./routes/equipo.routes.js";
-import { authRouter } from "./routes/auth.routes.js";
-import { authenticateToken } from "./middlewares/authenticateToken.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-//import "dotenv/config";
+import "dotenv/config";
+import { routes } from "./routes/index.routes.js";
 
 const app = express();
 app.disable("x-powered-by");
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 
 const PORT = process.env.PORT ?? 3000;
 
-// Rutas de autenticación
-app.use("/auth", authRouter);
-
-/// Rutas protegidas
-app.use("/cliente", clientRouter);
-app.use("/carrera", authenticateToken, carreraRouter);
-app.use("/equipo", authenticateToken, equipoRouter);
-
+app.use("/", routes);
 //Tratrar el error 404
 //El manejo del error 404 al final asegura que todas las demás rutas y middlewares sean evaluados primero
 app.use((req, res) => {

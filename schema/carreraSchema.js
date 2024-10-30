@@ -2,6 +2,7 @@ import z from "zod";
 
 const carreraSchema = z.object({
   nombre: z.string(),
+  icono: z.string(),
 });
 
 export function validateCarrera(input) {

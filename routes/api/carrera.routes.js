@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CarreraController } from "../controllers/carreraController.js";
+import { CarreraController } from "../../controllers/carreraController.js";
 
 export const carreraRouter = Router();
 
