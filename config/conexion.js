@@ -1,11 +1,11 @@
 import mysql from "mysql2/promise";
 
 const DEFAULT_CONFIG = {
-  host: process.env.DB_HOST ?? "localhost",
-  user: process.env.DB_USER ?? "root",
-  port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-  password: process.env.DB_PASSWORD ?? "root",
-  database: process.env.DB_DATABASE ?? "lobos_kit",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 
 const connectionString = DEFAULT_CONFIG;
