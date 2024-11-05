@@ -2,7 +2,7 @@
 export class BaseController {
   // El constructor toma tres argumentos: el modelo de datos (para interactuar con la base de datos),
   // y dos funciones de validación (una para validación completa y otra para validación parcial).
-  constructor(model, validate, validatePartial) {
+  constructor(model, validate = null, validatePartial = null) {
     this.model = model;
     this.validate = validate;
     this.validatePartial = validatePartial;
