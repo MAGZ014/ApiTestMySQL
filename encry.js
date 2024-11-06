@@ -1,5 +1,8 @@
 import { getConnection } from "./config/conexion.js";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+
+dotenv.config(); // Cargar variables de entorno desde .env
 
 const saltRounds = 10;
 

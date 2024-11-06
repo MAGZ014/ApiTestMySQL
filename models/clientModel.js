@@ -29,7 +29,8 @@ export class ClientModel {
   }
 
   static async create({ input }) {
-    const { nombre, correo, cuatrimestre, password, carrera, id_rol } = input;
+    const { nombre, correo, cuatrimestre, password, id_carrera, id_rol } =
+      input;
 
     const connection = await getConnection();
     const saltRounds = 10; // Declara saltRounds aquí
@@ -40,9 +41,9 @@ export class ClientModel {
 
       // Captura el resultado de la inserción en la variable result
       const [result] = await connection.query(
-        `INSERT INTO user (nombre,correo,cuatrimestre,password,carrera,id_rol)
+        `INSERT INTO user (nombre,correo,cuatrimestre,password,id_carrera,id_rol)
             VALUES (?,?,?,?,?,?);`,
-        [nombre, correo, cuatrimestre, hashedPassword, carrera, id_rol]
+        [nombre, correo, cuatrimestre, hashedPassword, id_carrera, id_rol]
       );
 
       // Usa result.insertId para obtener el ID del nuevo registro
@@ -75,7 +76,8 @@ export class ClientModel {
   }
 
   static async update({ id, input }) {
-    const { nombre, correo, cuatrimestre, password, carrera, id_rol } = input;
+    const { nombre, correo, cuatrimestre, password, id_carrera, id_rol } =
+      input;
 
     const connection = await getConnection();
 
@@ -83,14 +85,14 @@ export class ClientModel {
       // Realiza la actualización del user
       const [result] = await connection.query(
         `UPDATE user SET nombre = ?, correo = ?, cuatrimestre = ?, 
-         password = ?, carrera = ?, id_rol = ? 
+         password = ?, id_carrera = ?, id_rol = ? 
          WHERE id = ?;`,
         [
           nombre,
           correo,
           cuatrimestre,
           password,
-          carrera,
+          id_carrera,
           id_rol,
           id, // Usa el ID para la condición WHERE
         ]

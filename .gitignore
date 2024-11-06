@@ -4,3 +4,4 @@ node_modules/
 .npm
 processed_amazon_laptops.json
 .env
+encry.js

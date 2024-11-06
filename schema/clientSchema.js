@@ -5,7 +5,7 @@ const clientSchema = z.object({
   correo: z.string().email(),
   cuatrimestre: z.number(),
   password: z.string(),
-  carrera: z.number(),
+  id_carrera: z.number(),
   id_rol: z.number(),
 });
 

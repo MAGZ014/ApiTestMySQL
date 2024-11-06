@@ -16,5 +16,5 @@ routes.use("/auth", authRouter);
 routes.use("/cliente", authenticateToken, clientRouter);
 routes.use("/carrera", authenticateToken, carreraRouter);
 routes.use("/equipo", authenticateToken, equipoRouter);
-routes.use("/tipo", tipoRouter);
-routes.use("/asignado", materialAsignadoRouter);
+routes.use("/tipo", authenticateToken, tipoRouter);
+routes.use("/asignado", authenticateToken, materialAsignadoRouter);
