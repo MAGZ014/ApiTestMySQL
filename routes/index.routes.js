@@ -13,7 +13,7 @@ export const routes = Router();
 routes.use("/auth", authRouter);
 
 /// Rutas protegidas
-routes.use("/cliente", authenticateToken, clientRouter);
+routes.use("/cliente", clientRouter);
 routes.use("/carrera", authenticateToken, carreraRouter);
 routes.use("/equipo", authenticateToken, equipoRouter);
 routes.use("/tipo", authenticateToken, tipoRouter);

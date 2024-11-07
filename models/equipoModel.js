@@ -16,7 +16,8 @@ export class EquipoModel {
     try {
       const connection = await getConnection();
       const [material] = await connection.query(
-        `SELECT * FROM material WHERE id = ?;`,
+        `SELECT * FROM material m JOIN
+          tipo_material tm ON m.id_tipo_material = tm.id WHERE m.id = ?;`,
         [id]
       );
       if (material.length === 0) return null;
@@ -93,6 +94,36 @@ export class EquipoModel {
       return updatedMaterial[0];
     } catch (error) {
       throw new Error("Error updating material: " + error);
+    }
+  }
+
+  // Método para obtener materiales asociados a una carrera específica
+  static async getByCarrera({ id }) {
+    try {
+      const connection = await getConnection();
+      const [materiales] = await connection.query(
+        `SELECT
+          m.datos,
+          m.url,
+          m.img_url,
+          m.price,
+          m.reviews,
+          m.rating,
+          tm.tipo AS tipo_material
+      FROM
+          carrera c
+      JOIN
+          material_asignado ma ON c.id = ma.id_carrera
+      JOIN
+          material m ON ma.id_material = m.id
+      JOIN
+          tipo_material tm ON m.id_tipo_material = tm.id
+      WHERE c.id = ?`,
+        [id] // Utiliza el parámetro de carrera para hacer la consulta
+      );
+      return materiales;
+    } catch (error) {
+      throw new Error("Error fetching materials by carrera: " + error);
     }
   }
 }
