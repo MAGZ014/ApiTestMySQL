@@ -5,3 +5,4 @@ node_modules/
 processed_amazon_laptops.json
 .env
 encry.js
+keys.txt

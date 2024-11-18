@@ -5,6 +5,7 @@ export class materialAsignadoModel {
   // Método para asignar una carrera al usuario
   static async create({ input }) {
     const { id_carrera, id_material } = input;
+    console.log(input);
 
     try {
       const connection = await getConnection();
@@ -28,7 +29,7 @@ export class materialAsignadoModel {
         m.url,m.img_url,m.price,m.reviews,m.rating FROM carrera c
         JOIN material_asignado ma ON c.id = ma.id_carrera
         JOIN material m ON ma.id_material = m.id
-        WHERE c.id = 1;`,
+        WHERE c.id = ?;`,
         [id]
       );
       return asignada;

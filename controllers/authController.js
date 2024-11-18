@@ -21,24 +21,25 @@ export class AuthController {
 
       // Genera el token JWT
       const token = jwt.sign({ id: user.id, role: user.role }, SECRET_KEY, {
-        expiresIn: "1h",
+        expiresIn: "1h", // Tiempo de expiración del token
       });
 
       // Configura la cookie httpOnly con el token
+      // Configuración de la cookie con SameSite=Lax en desarrollo
       res.cookie("jwt", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
       });
 
-      res.json({ message: "Inicio de sesión exitoso" });
+      res.json({ message: "Inicio de sesión exitoso", id: user.id });
     } catch (error) {
       res.status(500).json({ error: "Error en el login" });
     }
   }
 
   async logout(req, res) {
-    res.clearCookie("jwt");
+    res.clearCookie("jwt"); // Elimina la cookie
     res.json({ message: "Logout exitoso" });
   }
 }

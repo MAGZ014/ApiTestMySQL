@@ -3,18 +3,19 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 import { routes } from "./routes/index.routes.js";
+import { corsOptions } from "./middlewares/cors.js";
 
 const app = express();
 app.disable("x-powered-by");
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 3001;
 
 app.use("/", routes);
-//Tratrar el error 404
-//El manejo del error 404 al final asegura que todas las demás rutas y middlewares sean evaluados primero
+
+// Manejo de error 404
 app.use((req, res) => {
   res.status(404).send("Error 404: Página no encontrada");
 });

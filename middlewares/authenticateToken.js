@@ -4,6 +4,7 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 export const authenticateToken = (req, res, next) => {
   const token = req.cookies.jwt;
+  console.log("Token recibido:", token); // Log para ver si el token está llegando
 
   if (!token) return res.status(401).json({ error: "Token requerido" });
 
