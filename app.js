@@ -13,7 +13,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT ?? 3001;
 
-app.use("/", routes);
+app.use("/api", routes);
 
 // Manejo de error 404
 app.use((req, res) => {

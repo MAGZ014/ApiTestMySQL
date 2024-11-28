@@ -12,7 +12,3 @@ subscriptionRouter.post(
   "/subscribe",
   subscriptionController.create.bind(subscriptionController)
 );
-subscriptionRouter.post(
-  "/send",
-  subscriptionController.sendNotification.bind(subscriptionController)
-);

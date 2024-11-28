@@ -4,7 +4,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8081/",
   "http://localhost:8081",
-  "https://3507-189-128-182-21.ngrok-free.app",
+  "https://f4ca-200-68-139-28.ngrok-free.app",
 ];
 
 export const corsOptions = {

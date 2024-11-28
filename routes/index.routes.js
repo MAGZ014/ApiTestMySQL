@@ -17,8 +17,8 @@ routes.use("/auth", authRouter);
 
 /// Rutas protegidas
 routes.use("/cliente", clientRouter);
-routes.use("/carrera", authenticateToken, carreraRouter);
-routes.use("/equipo", authenticateToken, equipoRouter);
-routes.use("/tipo", authenticateToken, tipoRouter);
-routes.use("/asignado", authenticateToken, materialAsignadoRouter);
-routes.use("/subscription", authenticateToken, subscriptionRouter);
+routes.use("/carrera", carreraRouter);
+routes.use("/equipo", equipoRouter);
+routes.use("/tipo", tipoRouter);
+routes.use("/asignado", materialAsignadoRouter);
+routes.use("/subscription", subscriptionRouter);
